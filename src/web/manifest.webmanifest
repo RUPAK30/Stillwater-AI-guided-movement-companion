@@ -1,0 +1,16 @@
+{
+  "name": "Stillwater: a calm workout companion",
+  "short_name": "Stillwater",
+  "description": "A calm, text-only workout companion that shapes a short session around what you need today.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#EFE9DC",
+  "theme_color": "#2A5444",
+  "icons": [
+    { "src": "/web/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/web/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/web/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/web/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

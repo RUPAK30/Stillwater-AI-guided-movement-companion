@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Stillwater · A calm workout companion</title>
+<meta name="description" content="A calm, text-only workout companion that shapes a short session around what you need today.">
+<meta name="theme-color" content="#2A5444"><link rel="manifest" href="/web/manifest.webmanifest"><link rel="icon" href="/web/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/web/icon-192.png">
+<link rel="stylesheet" href="/web/styles.css"><script type="module" src="/web/app.js"></script></head>
+<body data-phase="idle">
+<a class="skip-link" href="#screen">Skip to the session</a>
+<header class="topbar">
+  <a href="/" class="brand" aria-label="Stillwater home"><span class="brand-mark" aria-hidden="true"></span><span>stillwater</span></a>
+  <div id="progress" class="progress" aria-label="Session progress"></div>
+  <div class="topbar-actions">
+    <button id="pause" class="ghost" disabled>Pause</button>
+    <button id="theme" class="ghost icon" type="button" aria-label="Theme: automatic" title="Theme">◐</button>
+    <button id="menu" class="ghost icon" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">☰</button>
+  </div>
+</header>
+<main class="app">
+  <section class="preview" data-phase="idle" aria-label="Session">
+    <div id="aura" aria-hidden="true"></div>
+    <div id="pending" class="notice" hidden>Stillwater is thinking…</div>
+    <div id="paused" class="notice" hidden>Paused. Your place is kept.</div>
+    <p id="caption" class="caption" hidden></p>
+    <div id="screen" tabindex="-1"></div>
+    <nav id="navigation" class="row" hidden aria-label="Session steps"><button id="back">← Back</button><span id="position" class="micro"></span><button id="next" class="primary">Next →</button></nav>
+    <section class="spoken" aria-label="Stillwater says"><p id="spoken"></p></section>
+  </section>
+  <section class="talk" aria-label="Talk to Stillwater">
+    <div id="error" role="alert" hidden><p id="error-message"></p><button id="retry">Try again</button></div>
+    <form id="composer">
+      <label for="message" id="status" class="sr-only" role="status">Ready when you are</label>
+      <textarea id="message" rows="1" maxlength="2000" placeholder="Tell Stillwater what today needs…"></textarea>
+      <button id="cancel" type="button" class="ghost" disabled hidden>Stop</button>
+      <button id="send" class="primary" disabled>Send</button>
+    </form>
+    <p class="talk-hint micro">Enter to send · <kbd>Space</kbd> start or pause a timer · <kbd>←</kbd> <kbd>→</kbd> move between steps</p>
+  </section>
+  <div id="announcer" class="sr-only" aria-live="polite"></div>
+</main>
+<div id="scrim" hidden></div>
+<aside id="drawer" class="drawer" aria-label="Menu" hidden>
+  <div class="drawer-head">
+    <div class="tabs" role="tablist" aria-label="Menu sections">
+      <button role="tab" id="tab-talk" data-tab="talk" aria-selected="true" aria-controls="panel-talk">Conversation</button>
+      <button role="tab" id="tab-settings" data-tab="settings" aria-selected="false" aria-controls="panel-settings">Settings</button>
+      <button role="tab" id="tab-dev" data-tab="dev" aria-selected="false" aria-controls="panel-dev">Developer</button>
+    </div>
+    <button id="close-drawer" class="ghost icon" type="button" aria-label="Close menu">✕</button>
+  </div>
+  <section id="panel-talk" class="drawer-panel" data-panel="talk" role="tabpanel" aria-labelledby="tab-talk">
+    <div class="panel-row"><p class="micro">Everything you and Stillwater said in this session.</p><button id="reset">Start over</button></div>
+    <div id="transcript" role="log" aria-label="Conversation history"></div>
+  </section>
+  <section id="panel-settings" class="drawer-panel" data-panel="settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+    <h2>Session</h2>
+    <label class="toggle"><input type="checkbox" id="pref-ready" checked><span><strong>3-2-1 get-ready</strong> A short countdown before a timer starts. Timers never start by themselves.</span></label>
+    <label class="toggle"><input type="checkbox" id="pref-chime"><span><strong>Soft chime</strong> A gentle tone when a timer runs out. Off by default.</span></label>
+    <h2>Appearance</h2>
+    <div class="segmented" role="radiogroup" aria-label="Theme">
+      <label><input type="radio" name="theme" value="auto" checked> Automatic</label>
+      <label><input type="radio" name="theme" value="light"> Day</label>
+      <label><input type="radio" name="theme" value="dark"> Evening</label>
+    </div>
+    <h2>This device</h2>
+    <label class="toggle"><input type="checkbox" id="pref-remember"><span><strong>Remember me here</strong> Your name and last session, stored only in this browser. Nothing is sent anywhere.</span></label>
+    <button id="forget" type="button">Forget me on this device</button>
+    <p class="micro settings-note">Stillwater is simulated and text-only. It can’t see or hear you, and timers measure time on this page, not movement.</p>
+  </section>
+  <section id="panel-dev" class="drawer-panel" data-panel="dev" role="tabpanel" aria-labelledby="tab-dev" hidden>
+    <div class="provider-panel"><label for="provider">Run with</label><select id="provider" disabled><option>Connecting…</option></select><strong id="mode">Connecting</strong><p id="provider-description" class="micro"></p><label id="consent-wrap" hidden><input type="checkbox" id="consent"> <span id="consent-label"></span></label></div>
+    <button id="sample" type="button">Load wiring sample</button>
+    <details class="builder"><summary>Builder tools</summary><div class="tools-grid"><section><h3>Try a local patch</h3><p class="micro">OpenUI data only. Use a stable existing name to patch it.</p><label for="patch">Statement(s)</label><textarea id="patch" rows="4" spellcheck="false" placeholder='count1 = Keyword("6", "Sample value")'></textarea><button id="apply-patch">Apply local patch</button><p id="patch-status" role="status" class="micro"></p><details><summary>What the model receives next</summary><pre id="state-json"></pre></details></section><section><h3>Test and capture</h3><div id="mock-controls"><label for="fault">Next mock response</label><select id="fault"><option value="none">Normal</option><option value="slow">Slow · try interrupting</option><option value="schema">Invalid OpenUI schema</option><option value="request">Failed request</option></select></div><label for="run-label">Run label</label><select id="run-label"><option value="before">Before</option><option value="after">After</option></select><label for="note">What did you learn?</label><textarea id="note" rows="3" maxlength="2000" placeholder="Optional run note."></textarea><button id="export">Download run JSON</button><p id="export-status" class="micro" role="status">Manual capture.</p></section></div></details>
+  </section>
+</aside>
+</body></html>

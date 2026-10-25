@@ -1,0 +1,454 @@
+:root{--paper:#efe9dc;--surface:#fbf7ee;--panel:#f5f0e4;--ink:#1d241f;--soft-ink:#38423b;--muted:#5e665d;--line:#e1d9c7;--line-strong:#c9bfa9;--accent:#2a5444;--accent-hover:#1e4134;--accent-soft:#e3eadf;--sage:#8fae93;--sand:#d8c49b;--moss:#5f7d63;--danger:#9b3b2a;--radius:10px;
+--sans:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;--display:"Segoe UI Variable Display","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--ivory:#fdfaf3;--ivory-warm:#fbf5e8;--stage-1:#f6f3e9;--stage-2:#eeede1;--olive:#5f6b45;--sage-wash:#eef1e8;--line-sage:#dde2d2;--active:var(--accent);--done:var(--moss);--paused:#a97b33;--paused-wash:#f6eedf;--early:var(--sand);--danger-wash:#f6e9e5;--disabled:#c9cdc6;--shadow-soft:0 22px 44px -30px rgba(38,52,40,.38);--on-accent:#ffffff;--shadow-lift:0 1px 2px rgba(38,52,40,.06),0 8px 24px -16px rgba(38,52,40,.28);}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 520px at 88% -8%,rgba(216,196,155,.35),transparent 62%),radial-gradient(900px 500px at -10% 30%,rgba(143,174,147,.18),transparent 60%),var(--paper);background-attachment:fixed;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+header,main{max-width:1320px;margin:auto;padding:22px 40px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.brand{color:inherit;font-family:var(--display);font-size:26px;font-weight:700;letter-spacing:-.03em;text-decoration:none}
+.brand span{font-size:15px;font-weight:400;letter-spacing:0;color:var(--muted);margin-left:14px}
+.micro{font-size:12px;color:var(--muted)}
+.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:600;color:var(--muted);text-transform:uppercase;margin:0}
+h1{font-family:var(--display);font-size:46px;font-weight:700;letter-spacing:-.04em;line-height:1.05;margin:14px 0}
+h2{font-size:13px;font-weight:600;margin:0}h3{font-size:18px}p{margin:10px 0}
+.intro{padding:34px 0 22px}.intro>p:last-child{color:var(--soft-ink);max-width:560px}
+/* Controls */
+button,select,textarea,input[type=text]{font:inherit;border:1px solid var(--line-strong);border-radius:var(--radius);background:var(--surface);color:var(--ink)}
+button,select{min-height:44px;padding:10px 16px}
+button{cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
+button:hover:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}
+button:disabled{color:#9a9890;cursor:default;opacity:.7}
+button.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600}
+button.primary:hover:not(:disabled){background:var(--accent-hover);border-color:var(--accent-hover)}
+button.primary:disabled{background:var(--disabled);border-color:var(--disabled);color:var(--on-accent);opacity:1}
+button.quiet{border-color:transparent;background:transparent;color:var(--muted);padding-inline:10px;text-decoration:underline;text-underline-offset:3px}
+button.quiet:hover:not(:disabled){background:transparent;border-color:transparent;color:var(--ink)}
+textarea{display:block;width:100%;padding:12px 14px;resize:vertical;max-width:100%}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label{display:block;font-size:13px;margin:12px 0 6px;color:var(--soft-ink)}
+input[type=checkbox]{width:18px;height:18px;vertical-align:middle;accent-color:var(--accent)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+/* Frame */
+.provider-panel{border-block:1px solid var(--line);padding:14px 0;margin-bottom:24px}
+.provider-panel>label:first-child{display:inline-block;margin-right:14px}
+.provider-panel strong{font-size:11px;letter-spacing:.1em;margin-left:18px;color:var(--accent)}
+.workspace{display:grid;grid-template-columns:.8fr 1.2fr;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.conversation{border-right:1px solid var(--line);padding:22px;display:flex;flex-direction:column;background:var(--panel)}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.panel-heading h2{color:var(--muted);letter-spacing:.04em}
+.panel-heading button{font-size:12px;min-height:36px;padding:6px 12px}
+.preview{padding:22px 28px;min-width:0}
+/* Conversation */
+#transcript{height:380px;overflow:auto;overflow-wrap:anywhere;padding:4px 8px 4px 0}
+.message{padding:10px 0}
+.conversation>.row{gap:8px}.conversation>.row button{flex:1;white-space:nowrap;font-size:13px;padding-inline:10px}
+.message .who{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.message p{margin:4px 0 0}
+.message.user p{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 12px}
+.message.assistant p{font-family:var(--serif);font-size:17px;line-height:1.5}
+.event{font-size:12px;color:var(--muted);margin:6px 0;padding-left:10px;border-left:2px solid var(--line-strong)}
+#composer{margin-top:auto;padding-top:12px}
+/* Screen */
+#screen{min-height:360px;padding:18px 4px 8px;max-width:640px}
+.empty{padding:40px 0}.empty h3{font-family:var(--serif);font-size:30px;font-weight:400;max-width:360px;line-height:1.2}
+.block{margin:0;padding:8px 0;overflow-wrap:anywhere}
+.block-title{font-family:var(--display);font-size:32px;font-weight:700;line-height:1.12;letter-spacing:-.025em;margin:6px 0 4px}
+.block-subtitle{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.block-description{font-size:18px;line-height:1.5;color:var(--soft-ink)}
+.block-body{color:var(--muted)}
+ul.block{list-style:none;padding:4px 0 8px}
+ul.block li{position:relative;padding:5px 0 5px 22px}
+ul.block li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:2px;background:var(--accent)}
+.keyword{padding:22px 0 10px}
+.keyword strong{display:block;font-family:var(--display);font-size:60px;letter-spacing:-.04em;font-weight:300;line-height:1}
+.keyword p{font-size:13px;color:var(--muted);margin-top:8px}
+.alert{border-left:3px solid var(--accent);padding:12px 16px;background:var(--accent-soft);border-radius:0 8px 8px 0;font-size:14px;color:var(--soft-ink);margin:10px 0}
+.choices{justify-content:flex-start;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.choices button{border-radius:999px;padding:10px 18px}
+.profile-chip{display:inline-flex;gap:10px;align-items:baseline;margin:4px 0 6px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-size:13px}
+/* Name field */
+.name-input{margin:14px 0 4px}
+.name-input label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--muted)}
+.name-line{display:flex;gap:8px;max-width:460px}
+.name-line input{flex:1;min-width:0;min-height:52px;padding:12px 16px;font-size:20px;border-radius:12px}
+.name-line input[aria-invalid=true]{border-color:var(--danger)}
+.name-line button{min-height:52px;padding-inline:22px}
+.name-error{color:var(--danger);font-size:14px;margin:8px 0 0}
+/* Timer */
+.timer{border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0;background:var(--panel)}
+.timer h3{margin:4px 0 0;font-size:16px;font-weight:600}
+.timer-face{display:flex;align-items:baseline;gap:14px;margin-top:6px}
+.timer-clock{font-family:var(--display);font-size:64px;font-weight:300;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.05}
+.timer-status{text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.timer[data-status=running] .timer-status{color:var(--accent)}
+.timer-bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin:12px 0 4px}
+.timer-bar span{display:block;height:100%;width:0;background:var(--accent)}
+.timer-controls{justify-content:flex-start;flex-wrap:wrap;gap:6px}
+.timer-done{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.timer-done p{margin:0;font-weight:600;color:var(--accent)}
+/* Recap: folded by default so closure leads and bookkeeping stays one click away */
+.recap{border-top:1px solid var(--line);padding:12px 0 0;margin:26px 0 6px}
+.recap summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;color:var(--muted);font-size:13px}
+.recap-title{font-weight:600;letter-spacing:.02em}
+.recap-summary{font-size:13px}
+.recap[open] .recap-summary{color:var(--ink)}
+/* Closing screen: Stillwater's voice, more air, nothing to do */
+#screen.closing{padding-top:40px}
+#screen.closing .block-title{font-family:var(--serif);font-weight:400;font-size:38px;letter-spacing:-.01em}
+#screen.closing .block-description{font-size:19px;max-width:540px}
+#screen.closing .block-body{font-family:var(--serif);font-size:18px;color:var(--soft-ink);max-width:520px}
+.recap-list li[data-status=done]::before{background:var(--accent);height:8px;top:11px;border-radius:50%}
+.recap-list li[data-status=stopped]::before{background:var(--line-strong)}
+/* Stepper */
+.progress{display:flex;gap:4px}
+.progress span{height:3px;flex:1;background:var(--line);border-radius:3px}
+.progress span.active{background:var(--accent)}
+.progress span.past{background:var(--accent);opacity:.4}
+#navigation{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
+/* Spoken lane */
+.spoken{border-top:1px solid var(--line);margin:24px -28px -22px;padding:22px 28px 24px;background:var(--panel);min-height:150px}
+.spoken h2{display:flex;justify-content:space-between;gap:12px;color:var(--muted);letter-spacing:.04em}
+.spoken p{font-family:var(--serif);font-size:22px;line-height:1.45;max-width:640px}
+.notice,#error{background:var(--accent-soft);border-left:3px solid var(--accent);padding:10px 14px;font-size:13px;border-radius:0 8px 8px 0}
+#error{background:var(--danger-wash);border-left-color:var(--danger)}
+/* Builder + footer */
+.builder{margin-top:24px;border-block:1px solid var(--line);padding:16px 0}
+.builder summary{cursor:pointer}.builder summary span{margin-left:18px}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;padding:12px 0}
+.tools-grid button{margin-top:12px}
+pre{max-height:330px;overflow:auto;padding:12px;background:var(--line);border-radius:8px;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+footer{padding:26px 0;color:var(--muted);font-size:12px}
+[hidden]{display:none!important}
+@media(max-width:760px){header,main{padding:16px}.brand{font-size:22px}.brand span{font-size:13px;margin-left:6px}header>.micro{display:none}h1{font-size:34px}
+.workspace,.tools-grid{grid-template-columns:1fr}.conversation{border-right:0;border-bottom:1px solid var(--line);padding:16px}.preview{padding:16px}
+#transcript{height:220px}.provider-panel strong{display:block;margin:12px 0 0}.spoken{margin:20px -16px -16px;padding:18px 16px}.spoken h2{display:block}.spoken .micro{display:block}
+.row{flex-wrap:wrap}.builder summary span{display:block;margin-left:0}#screen{min-height:260px}.block-title{font-size:27px}.keyword strong{font-size:48px}.timer-clock{font-size:52px}}
+/* Stillwater's presence: one soft organic form behind the preview. It never loops; it only
+   settles into a new state when the activity changes (see updatePhase in app.ts). */
+.preview{position:relative;overflow:hidden;overflow:clip}
+.preview>*:not(#aura){position:relative;z-index:1}
+#aura{position:absolute;z-index:0;top:-120px;right:-150px;width:470px;height:430px;pointer-events:none;border-radius:46% 54% 58% 42%/52% 44% 56% 48%;filter:blur(10px);opacity:.5;transform:scale(.9);
+background:radial-gradient(closest-side at 40% 45%,rgba(143,174,147,.6),rgba(143,174,147,0) 72%),radial-gradient(closest-side at 66% 62%,rgba(216,196,155,.6),rgba(216,196,155,0) 72%),radial-gradient(closest-side,rgba(95,125,99,.16),rgba(95,125,99,0) 78%);
+transition:transform 1.4s cubic-bezier(.2,.7,.2,1),opacity 1.4s ease,border-radius 1.8s ease,filter 1.4s ease}
+.preview[data-phase=arrival] #aura{opacity:1;transform:translate(-70px,70px) scale(1.15)}
+.preview[data-phase=discovery] #aura{opacity:.9;transform:translate(-90px,90px) scale(1.1);border-radius:58% 42% 50% 50%/46% 54% 46% 54%}
+.text-input{max-width:520px}.text-input .name-line{max-width:none}.text-input input{font-size:17px}
+[data-statement=intensity_need]{font-family:var(--serif);font-size:20px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--soft-ink);margin-top:4px}
+.preview[data-phase=care] #aura{opacity:.22;transform:translate(60px,-50px) scale(.7);filter:blur(18px) grayscale(.6)}
+.alert-warning{border-left-color:var(--paused);background:var(--paused-wash)}.alert-danger{border-left-color:var(--danger);background:var(--danger-wash);color:var(--ink)}
+#screen.enter{animation:screen-in .32s ease both}#screen.enter-stage{animation:screen-in .7s ease both}
+@keyframes screen-in{from{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){#screen.enter,#screen.enter-stage{animation:none}}
+.rail{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;margin:0 0 2px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.rail-intent{color:var(--moss);font-weight:600}
+.preview[data-phase=present] #aura{opacity:.7;transform:scale(.95)}
+.preview[data-phase=ready] #aura{opacity:.32;transform:translate(50px,-40px) scale(.7)}
+.preview[data-phase=focus] #aura{opacity:.14;transform:translate(80px,-70px) scale(.55)}
+.preview[data-phase=rest] #aura{opacity:.5;transform:translate(10px,0) scale(.85);border-radius:54% 46% 44% 56%/48% 56% 44% 52%}
+.preview[data-phase=closing] #aura{opacity:.9;transform:translate(-170px,170px) scale(1.5);filter:blur(16px);transition-duration:2.4s}
+.preview[data-phase=closed] #aura{opacity:.6;transform:translate(-170px,190px) scale(1.65);filter:blur(20px);transition-duration:3s}
+.progress{transition:opacity 1.4s ease}
+.preview[data-phase=focus] .progress{opacity:.45}
+.preview[data-phase=closing] .progress,.preview[data-phase=closed] .progress{opacity:.2}
+.preview[data-phase=closing] .spoken,.preview[data-phase=closed] .spoken{background:transparent}
+/* Arrival: the greeting word carries the moment once. */
+.preview[data-phase=arrival] .keyword strong{font-size:96px;color:var(--accent);animation:arrive 1.1s cubic-bezier(.2,.7,.2,1) both}
+.timer-done:not([hidden]){animation:arrive .6s ease both}
+@keyframes arrive{from{opacity:0;transform:translateY(8px)}}
+@media(prefers-reduced-motion:reduce){#aura,.progress{transition:opacity .3s}.preview[data-phase=arrival] .keyword strong,.timer-done:not([hidden]){animation:none}}
+@media(max-width:760px){#aura{width:320px;height:300px;right:-120px}.preview[data-phase=arrival] .keyword strong{font-size:72px}}
+/* Atmosphere by stage: warm for discovery, clean for movement, sage-quiet for the close. */
+.preview{background:var(--surface);transition:background-color 1.2s ease}
+.preview[data-phase=discovery]{background:var(--ivory-warm)}
+.preview[data-phase=closing],.preview[data-phase=closed]{background:var(--sage-wash)}
+.preview[data-phase=care]{background:var(--surface)}
+.preview[data-phase=care] .timer{display:none}
+/* During movement, talking to Stillwater stays available but quiet. */
+.preview[data-phase=ready] .text-input,.preview[data-phase=focus] .text-input,.preview[data-phase=rest] .text-input{margin-top:18px;opacity:.8;max-width:440px}
+.preview[data-phase=ready] .text-input label,.preview[data-phase=focus] .text-input label,.preview[data-phase=rest] .text-input label{font-size:11px}
+.preview[data-phase=ready] .text-input input,.preview[data-phase=focus] .text-input input,.preview[data-phase=rest] .text-input input{min-height:40px;font-size:14px;padding:8px 12px}
+.preview[data-phase=ready] .text-input button,.preview[data-phase=focus] .text-input button,.preview[data-phase=rest] .text-input button{min-height:40px;background:transparent;color:var(--accent);border-color:var(--line-strong);font-weight:500}
+/* Adjustment and timer states share one restrained palette: sage = active, forest = done, sand = early or paused. */
+.workout-offer:not(:empty){display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:12px;border:1px solid var(--sage);background:linear-gradient(180deg,var(--accent-soft),var(--sage-wash))}
+.workout-offer .alert{background:transparent;border:0;padding:0;font-family:var(--serif);font-size:18px;color:var(--ink)}
+.workout.adjusted .workout-hero{animation:adjusted 1.4s ease both}
+@keyframes adjusted{0%{box-shadow:0 0 0 0 rgba(143,174,147,.0)}25%{box-shadow:0 0 0 6px rgba(143,174,147,.35)}100%{box-shadow:0 0 0 0 rgba(143,174,147,0)}}
+.timer{transition:border-color .4s ease,background-color .4s ease,box-shadow .4s ease}
+.timer[data-status=running]{border-color:var(--sage);box-shadow:0 0 0 3px rgba(143,174,147,.18)}
+.timer[data-status=paused]{border-color:var(--sand)}
+.timer[data-status=done]{background:var(--sage-wash);border-color:var(--line-sage)}
+.preview[data-phase=ready],.preview[data-phase=focus],.preview[data-phase=rest]{background:linear-gradient(180deg,var(--surface) 0%,var(--panel) 100%)}
+/* Conversation and workout share Stillwater's mark. */
+.message.assistant{border-left:2px solid var(--sage);padding-left:12px}
+.message.assistant .who{color:var(--accent)}
+@media(prefers-reduced-motion:reduce){.workout.adjusted .workout-hero{animation:none}}
+/* ── Active workout: one guided composition ─────────────────────────────── */
+.workout{display:flex;flex-direction:column;gap:16px}
+.workout-head{display:flex;justify-content:space-between;align-items:center;gap:10px 18px;flex-wrap:wrap}
+.workout-mark{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0}
+.sw-dot{width:12px;height:12px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 35%,var(--sage),var(--accent));box-shadow:0 0 0 4px rgba(143,174,147,.22)}
+.sw-name{font-weight:700;letter-spacing:.04em;color:var(--accent)}
+.workout-intent{font-size:13px;color:var(--soft-ink);padding:3px 10px;border-radius:999px;background:var(--accent-soft)}
+.workout-adjusted{font-size:12px;font-weight:600;color:var(--on-accent);background:var(--accent);padding:3px 10px;border-radius:999px}
+.workout-progress{display:flex;align-items:center;gap:12px}
+.workout-count{font-size:13px;font-weight:600;color:var(--soft-ink)}
+.workout-track{display:flex;gap:5px}
+.workout-track span{width:26px;height:6px;border-radius:6px;background:var(--line);transition:background-color .4s ease,transform .4s ease}
+.workout-track span.done{background:var(--accent)}.workout-track span.early{background:var(--sand)}.workout-track span.open{background:var(--sage)}
+.workout-track span.current{transform:scaleY(1.6);background:var(--moss)}
+/* The movement stage: centred, spacious, sage-lit. */
+.workout-hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:30px 28px 26px;border-radius:24px;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(143,174,147,.28),rgba(143,174,147,0) 60%),linear-gradient(180deg,var(--stage-1),var(--stage-2));border:1px solid var(--line-sage)}
+.workout-title{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;letter-spacing:-.01em;margin:0;color:var(--ink)}
+.workout-instruction{max-width:520px;margin:6px auto 4px;font-size:17px;line-height:1.5;color:var(--soft-ink)}
+.stage-timer{border:0!important;box-shadow:none!important;background:transparent!important;padding:6px 0 0;margin:0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.stage-timer>.eyebrow,.stage-timer>.timer-bar{display:none}
+.stage-timer>h3{order:2;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.dial{position:relative;width:212px;height:212px;order:1}
+.dial-ring{width:100%;height:100%;transform:rotate(-90deg)}
+.dial-track{fill:none;stroke:rgba(42,84,68,.12);stroke-width:5}
+.dial-arc{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .3s linear,stroke .4s ease}
+.stage-timer[data-status=paused] .dial-arc{stroke:var(--paused)}.stage-timer[data-status=done] .dial-arc{stroke:var(--moss)}
+.dial .timer-face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;margin:0}
+.dial .timer-clock{font-size:54px}
+.dial .timer-status{margin:0;font-size:11px}
+.stage-timer>.timer-controls{order:3;justify-content:center;gap:8px;margin-top:4px}
+.stage-timer>.timer-controls button:not(.quiet){min-width:150px;border-radius:999px}
+.stage-timer>.timer-done{order:4;justify-content:center;border-top:0;padding-top:0;margin-top:2px}
+.workout-cues{display:flex!important;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px 0 0!important;margin:0}
+.workout-cues li{padding:6px 12px!important;border-radius:999px;background:rgba(251,247,238,.85);border:1px solid var(--line-sage);font-size:14px}
+.workout-cues li::before{display:none}
+/* Below the stage: Stillwater companion (wide) and Up next (compact). */
+.workout-lower{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:14px;align-items:stretch}
+.workout-companion{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.workout-say{display:flex;gap:10px;align-items:baseline;margin:0;font-family:var(--serif);font-size:17px;line-height:1.4;color:var(--soft-ink);transition:opacity .5s ease}
+.workout-say .sw-dot{width:9px;height:9px;transform:translateY(-1px)}
+.preview[data-phase=focus] .workout-say{opacity:.35}
+.workout-companion .text-input{margin:0;opacity:1!important;max-width:none!important}
+.workout-companion .text-input label{display:none}
+.workout-offer{display:flex;flex-direction:column;gap:8px}
+.workout-offer-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.workout-offer .alert{background:transparent;border:0;padding:0;margin:0;font-family:var(--serif);font-size:18px;color:var(--ink)}
+.workout-offer .choices{margin:0}
+.workout.has-offer .workout-companion{border-color:var(--sage);background:linear-gradient(180deg,var(--accent-soft),var(--sage-wash))}
+.workout-next{display:flex;flex-direction:column;justify-content:center;gap:4px;padding:14px 16px;border-radius:16px;border:1px dashed var(--line-strong);background:transparent}
+.workout-next-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.workout-next-title{font-size:16px;color:var(--ink)}.workout-next-meta{font-size:12px;color:var(--muted)}
+.workout-nav #navigation{margin-top:0;border-top:1px solid var(--line);padding-top:12px}
+/* Movement changes: the stage content and dial arrive together; the frame stays. */
+#screen.enter-soft .workout-hero>*,#screen.enter-soft .workout-next{animation:screen-in .4s ease both}
+@media(prefers-reduced-motion:reduce){#screen.enter-soft .workout-hero>*,#screen.enter-soft .workout-next{animation:none}.dial-arc{transition:none}}
+@media(max-width:760px){.workout-hero{padding:22px 16px}.workout-title{font-size:32px}.dial{width:180px;height:180px}.dial .timer-clock{font-size:44px}.workout-lower{grid-template-columns:1fr}.workout-head{flex-direction:column;align-items:flex-start}}
+/* Stillwater speaks inside the workout, so the separate lane steps back; the offer is one surface, not a box in a box. */
+.preview[data-phase=ready] .spoken,.preview[data-phase=focus] .spoken,.preview[data-phase=rest] .spoken{display:none}
+.workout-companion .workout-offer:not(:empty){border:0;padding:0;background:transparent}
+/* ── Final visual pass: one art-directed workout environment ─────────────── */
+/* The preview and the stage share one tonal field; the stage is lit, not boxed. */
+.preview[data-phase=ready],.preview[data-phase=focus],.preview[data-phase=rest]{background:radial-gradient(120% 70% at 50% 18%,var(--ivory) 0%,var(--surface) 45%,var(--panel) 100%)}
+.workout{gap:20px}
+.workout-head{padding:0 4px}
+.sw-dot{background:radial-gradient(circle at 35% 30%,#a9c2a8,var(--accent) 70%);box-shadow:0 0 0 5px rgba(143,174,147,.18)}
+.sw-name{font-size:15px;letter-spacing:.02em}
+.workout-intent{background:transparent;padding:0;color:var(--olive);font-size:13px;font-weight:600;letter-spacing:.04em}
+.workout-intent::before{content:"·";margin-right:10px;color:var(--line-strong)}
+.workout-adjusted{background:var(--sage-wash);color:var(--accent);box-shadow:inset 0 0 0 1px var(--line-sage)}
+/* Progress: thin and quiet; the current movement is the one longer, darker mark. */
+.workout-count{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.workout-track{gap:4px;align-items:center}
+.workout-track span{width:18px;height:3px;background:var(--line);transition:width .45s ease,background-color .45s ease}
+.workout-track span.done{background:var(--olive)}.workout-track span.early{background:var(--early)}.workout-track span.open{background:var(--sage)}
+.workout-track span.current{width:36px;transform:none;background:var(--active)}
+/* Movement stage: borderless, softly lit from above, lifted by shadow rather than outline. */
+.workout-hero{border:0;border-radius:28px;padding:38px 32px 30px;gap:8px;box-shadow:var(--shadow-soft);
+  background:radial-gradient(90% 70% at 50% 0%,rgba(143,174,147,.26),rgba(143,174,147,0) 62%),radial-gradient(60% 50% at 85% 100%,rgba(216,196,155,.18),rgba(216,196,155,0) 70%),linear-gradient(180deg,var(--stage-1),var(--stage-2))}
+.workout-title{font-size:46px;letter-spacing:-.015em;color:var(--ink)}
+.workout-instruction{font-size:17px;color:var(--soft-ink);max-width:500px;margin:4px auto 10px}
+/* Dial: a hairline track, a confident arc, light numerals on an ivory disc. */
+.dial{width:224px;height:224px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.dial::before{content:"";position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 50% 35%,var(--ivory),var(--stage-1));box-shadow:var(--shadow-lift)}
+.dial-ring{position:relative}
+.dial-track{stroke:rgba(42,84,68,.10);stroke-width:2.5}
+.dial-arc{stroke:var(--active);stroke-width:4;transition:stroke-dashoffset .3s linear,stroke .45s ease,stroke-width .45s ease}
+.dial .timer-face{z-index:1}
+.dial .timer-clock{font-size:56px;font-weight:200;letter-spacing:-.02em;color:var(--ink)}
+.dial .timer-status{font-size:10px;letter-spacing:.18em;color:var(--muted)}
+.stage-timer[data-status=running] .dial{transform:scale(1.03)}
+.stage-timer[data-status=running] .dial-arc{stroke-width:5;filter:drop-shadow(0 0 4px rgba(42,84,68,.25))}
+.stage-timer[data-status=running] .timer-status{color:var(--active)}
+.stage-timer[data-status=paused] .dial-arc{stroke:var(--paused)}.stage-timer[data-status=paused] .timer-status{color:var(--paused)}
+.stage-timer[data-status=done] .dial-arc{stroke:var(--done)}.stage-timer[data-status=done] .timer-status{color:var(--done)}
+.stage-timer>h3{font-size:12px;font-weight:500;letter-spacing:.06em;color:var(--muted)}
+.stage-timer>.timer-controls{gap:4px}
+.stage-timer>.timer-controls button:not(.quiet){min-width:168px;min-height:46px;box-shadow:var(--shadow-lift)}
+.stage-timer>.timer-controls button:not(.quiet):not(.primary){background:var(--ivory);border-color:transparent}
+.stage-timer .quiet{font-size:13px}
+.stage-timer>.timer-done p{color:var(--done)}
+.workout-cues{gap:6px;padding-top:14px!important}
+.workout-cues li{background:color-mix(in srgb,var(--ivory) 72%,transparent);border:0;box-shadow:inset 0 0 0 1px rgba(125,138,92,.14);font-size:13px;color:var(--soft-ink)}
+/* Stillwater and Up next continue the stage: same tonal family, no hard boxes. */
+.workout-lower{grid-template-columns:minmax(0,1fr) 190px;gap:18px}
+.workout-companion{border:0;background:linear-gradient(180deg,var(--stage-2),var(--panel));border-radius:22px;padding:16px 18px;gap:12px}
+.workout-say{font-size:17px;color:var(--soft-ink)}
+.workout-companion .text-input input{background:var(--ivory);border-color:transparent;box-shadow:inset 0 0 0 1px var(--line-sage)}
+.workout-companion .text-input input:focus-visible{box-shadow:inset 0 0 0 1px var(--sage)}
+.workout-companion .text-input button{background:transparent;border-color:transparent;color:var(--accent);font-weight:600}
+.workout.has-offer .workout-companion{background:linear-gradient(180deg,var(--sage-wash),var(--stage-2));box-shadow:inset 0 0 0 1px var(--line-sage)}
+.workout-offer .choices button{background:var(--ivory);border-color:transparent;box-shadow:var(--shadow-lift)}
+.workout-offer .choices button:first-child{background:var(--accent);color:var(--on-accent)}
+.workout-next{border:0;border-left:2px solid var(--line-sage);border-radius:0;padding:6px 0 6px 16px;gap:2px}
+.workout-next-label{font-size:10px;letter-spacing:.16em;color:var(--olive)}
+.workout-next-title{font-family:var(--serif);font-size:19px;font-weight:400}
+.workout-nav #navigation{border-top:0;padding-top:4px}
+.workout-nav #navigation button:not(.primary){background:transparent;border-color:transparent;color:var(--soft-ink)}
+/* Motion that follows real state: movement change, timer start/pause (above), confirmed adjustment. */
+#screen.enter-soft .workout-hero>*,#screen.enter-soft .workout-next{animation:stage-in .5s cubic-bezier(.2,.7,.2,1) both}
+#screen.enter-soft .workout-hero>*:nth-child(2){animation-delay:.05s}#screen.enter-soft .workout-hero>*:nth-child(3){animation-delay:.1s}
+@keyframes stage-in{from{opacity:0;transform:translateY(10px)}}
+.workout.adjusted .workout-hero{animation:adjusted-glow 1.8s ease both}
+@keyframes adjusted-glow{0%{box-shadow:var(--shadow-soft),0 0 0 0 rgba(143,174,147,0)}30%{box-shadow:var(--shadow-soft),0 0 0 8px rgba(143,174,147,.22)}100%{box-shadow:var(--shadow-soft),0 0 0 0 rgba(143,174,147,0)}}
+/* The conversation shares the same token logic. */
+.conversation{background:linear-gradient(180deg,var(--panel),var(--surface))}
+.message.user p{background:var(--ivory);border-color:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.message.assistant{border-left-color:var(--line-sage)}
+.workspace{border-color:transparent;box-shadow:var(--shadow-soft)}
+@media(prefers-reduced-motion:reduce){.dial,.workout-track span{transition:none}.stage-timer[data-status=running] .dial{transform:none}#screen.enter-soft .workout-hero>*,#screen.enter-soft .workout-next,.workout.adjusted .workout-hero{animation:none}}
+@media(max-width:760px){.workout-hero{padding:26px 16px 22px}.workout-title{font-size:34px}.dial{width:190px;height:190px}.dial .timer-clock{font-size:46px}.workout-lower{grid-template-columns:1fr}}
+.preview .workout-companion .text-input button{background:transparent;border-color:transparent;color:var(--accent);font-weight:600;opacity:1}
+@media(max-width:760px){.workout-intent::before{display:none}}
+/* ═══ App shell (Stillwater as a product, not a harness) ═══════════════════ */
+html{scroll-padding-top:80px}
+body{min-height:100dvh;display:flex;flex-direction:column;overflow-x:clip;transition:background-color .8s ease}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:12px;top:-60px;z-index:60;padding:10px 14px;border-radius:10px;background:var(--accent);color:var(--on-accent);text-decoration:none}
+.skip-link:focus{top:12px}
+kbd{font:inherit;font-size:11px;padding:1px 6px;border-radius:5px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
+button.ghost{background:transparent;border-color:transparent;color:var(--soft-ink)}
+button.ghost:hover:not(:disabled){background:var(--accent-soft);border-color:transparent}
+button.icon{width:44px;padding:0;font-size:18px;line-height:1}
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:20;max-width:none;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;padding:10px clamp(16px,4vw,40px);border-bottom:0;background:color-mix(in srgb,var(--paper) 78%,transparent);backdrop-filter:saturate(1.2) blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;font-size:21px;letter-spacing:-.02em}
+.brand-mark{width:20px;height:20px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#a9c2a8,var(--accent) 70%);box-shadow:0 0 0 5px rgba(143,174,147,.2)}
+.topbar .progress{justify-self:center;width:min(420px,100%);transition:opacity .6s ease}
+.topbar-actions{display:flex;align-items:center;gap:4px}
+#pause{min-height:40px;padding:8px 14px;border-radius:999px}
+#pause:disabled{visibility:hidden}
+/* The session column */
+main.app{flex:1;width:100%;max-width:880px;margin:0 auto;padding:6px clamp(16px,4vw,32px) 0;display:flex;flex-direction:column}
+.preview,.preview[data-phase]{flex:1;padding:8px 0 24px;background:transparent!important;overflow:visible}
+#aura{position:fixed;top:-140px;right:-160px;z-index:0}
+#screen{min-height:0;max-width:none;padding:12px 0 8px;outline:none}
+.notice{display:inline-block;margin:4px 0;border:0;border-radius:999px;padding:6px 14px;background:var(--accent-soft);color:var(--accent);font-size:13px}
+/* The companion's latest words */
+.caption{display:flex;gap:12px;align-items:baseline;margin:6px 0 2px;font-family:var(--serif);font-size:19px;line-height:1.45;color:var(--soft-ink);animation:screen-in .5s ease both}
+.caption::before{content:"";width:9px;height:9px;flex:none;border-radius:50%;transform:translateY(-2px);background:radial-gradient(circle at 35% 30%,#a9c2a8,var(--accent) 70%)}
+.spoken{border:0;margin:10px 0 0;padding:0;background:transparent!important;min-height:0}
+.spoken p{margin:0;font-size:17px;color:var(--muted)}
+.spoken:has(#spoken:empty){display:none}
+#navigation{border-top:1px solid var(--line);padding-top:14px;margin-top:20px}
+/* Talk bar */
+.talk{position:sticky;bottom:0;z-index:15;padding:14px 0 calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,var(--paper) 34%);transition:opacity .5s ease}
+#composer{display:flex;align-items:flex-end;gap:8px;margin:0;padding:6px 6px 6px 18px;border-radius:26px;background:var(--surface);box-shadow:var(--shadow-lift),inset 0 0 0 1px var(--line)}
+#composer:focus-within{box-shadow:var(--shadow-lift),inset 0 0 0 2px var(--sage)}
+#message{flex:1;border:0;background:transparent;padding:11px 0;resize:none;min-height:44px;max-height:140px;font-size:16px;line-height:1.4;outline:none}
+#composer button{border-radius:999px;min-height:44px}
+#send{padding-inline:20px}
+.talk-hint{margin:8px 0 0;text-align:center}
+#error{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;border-radius:14px}
+#error p{margin:0}
+/* Home */
+.home{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:clamp(24px,8vh,72px) 0 12px;animation:screen-in .6s ease both}
+.home-hello{margin:0;font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--olive)}
+.home-title{margin:4px 0;font-family:var(--serif);font-weight:400;font-size:clamp(34px,6vw,52px);line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
+.home-lede{max-width:520px;margin:6px 0 18px;font-size:18px;color:var(--soft-ink)}
+.home-start{min-height:54px;padding:12px 26px;border-radius:999px;font-size:17px;box-shadow:var(--shadow-lift)}
+.home-label{margin:26px 0 8px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.home-quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;width:100%}
+.quick{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;min-height:84px;padding:16px 18px;border-radius:18px;border:0;background:var(--surface);box-shadow:var(--shadow-lift),inset 0 0 0 1px var(--line);transition:transform .2s ease,box-shadow .2s ease}
+.quick:hover:not(:disabled){transform:translateY(-2px);background:var(--surface);box-shadow:var(--shadow-soft),inset 0 0 0 1px var(--line-sage)}
+.quick strong{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink)}
+.quick span{font-size:13px;color:var(--muted)}
+.quick.again{background:var(--sage-wash);box-shadow:inset 0 0 0 1px var(--line-sage)}
+.home-note{margin-top:18px}
+/* Drawer */
+#scrim{position:fixed;inset:0;z-index:35;background:rgba(20,28,22,.28)}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:40;width:min(420px,100vw);display:flex;flex-direction:column;background:var(--surface);box-shadow:-24px 0 60px -30px rgba(20,28,22,.45);animation:drawer-in .3s cubic-bezier(.2,.7,.2,1) both}
+@keyframes drawer-in{from{transform:translateX(24px);opacity:0}}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 12px 8px 16px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--panel)}
+.tabs button{min-height:36px;padding:6px 12px;border:0;border-radius:999px;background:transparent;font-size:13px;color:var(--soft-ink)}
+.tabs button[aria-selected=true]{background:var(--surface);color:var(--accent);font-weight:600;box-shadow:var(--shadow-lift)}
+.drawer-panel{flex:1;overflow:auto;padding:16px 18px 24px}
+.drawer-panel h2{margin:18px 0 8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.drawer-panel h2:first-child{margin-top:0}
+.panel-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.panel-row p{margin:0}
+.drawer #transcript{height:auto;padding:8px 0}
+.toggle{display:flex;gap:14px;align-items:flex-start;margin:0 0 14px;font-size:14px;color:var(--soft-ink);cursor:pointer}
+.toggle strong{display:block;color:var(--ink)}
+.toggle input{appearance:none;flex:none;width:42px;height:24px;margin:2px 0 0;border-radius:999px;background:var(--line-strong);position:relative;cursor:pointer;transition:background-color .2s ease}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .2s ease}
+.toggle input:checked{background:var(--accent)}
+.toggle input:checked::after{transform:translateX(18px)}
+.segmented{display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--panel);margin-bottom:6px}
+.segmented label{flex:1;margin:0;text-align:center;padding:8px 6px;border-radius:999px;font-size:13px;cursor:pointer;color:var(--soft-ink)}
+.segmented input{position:absolute;opacity:0;pointer-events:none}
+.segmented label:has(input:checked){background:var(--surface);color:var(--accent);font-weight:600;box-shadow:var(--shadow-lift)}
+.segmented label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+#forget{margin-top:4px}
+.settings-note{margin-top:22px}
+#panel-dev .provider-panel{border:0;padding:0;margin:0 0 14px}
+#panel-dev .tools-grid{grid-template-columns:1fr;gap:18px}
+#panel-dev #sample{margin-bottom:12px}
+@media(min-width:1000px){body.drawer-open{padding-right:420px}#scrim{display:none}}
+/* Session overview sheet */
+.workout{position:relative}
+.workout-progress{display:flex;align-items:center;gap:12px;min-height:40px;padding:6px 10px;margin:-6px -10px;border:0;border-radius:999px;background:transparent}
+.workout-progress:hover:not(:disabled){background:var(--accent-soft)}
+.workout-sheet{position:absolute;top:44px;right:0;z-index:6;width:min(380px,100%);padding:14px;border-radius:20px;background:var(--surface);box-shadow:var(--shadow-soft),inset 0 0 0 1px var(--line);animation:screen-in .25s ease both}
+.sheet-title{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sheet-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.sheet-item{width:100%;display:grid;grid-template-columns:26px 1fr auto;grid-template-rows:auto auto;column-gap:10px;text-align:left;align-items:center;min-height:52px;padding:8px 10px;border:0;border-radius:12px;background:transparent}
+.sheet-item:hover:not(:disabled){background:var(--accent-soft)}
+.sheet-item.current{background:var(--sage-wash)}
+.sheet-item:disabled{opacity:1;cursor:default;color:inherit}
+.sheet-n{grid-row:1/3;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--panel);font-size:12px;font-weight:600}
+.sheet-item strong{font-weight:600;font-size:14px;color:var(--ink)}
+.sheet-time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sheet-status{grid-column:2/4;font-size:12px;color:var(--olive)}
+.sheet-status:empty{display:none}
+/* Countdown and breathing pacer on the dial */
+.dial-count{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font-family:var(--display);font-size:92px;font-weight:200;color:var(--accent);pointer-events:none}
+.dial-count:empty{display:none}
+.dial[data-counting=true] .timer-face{opacity:0}
+.dial[data-counting=true]::before{box-shadow:var(--shadow-lift),0 0 0 6px rgba(143,174,147,.25)}
+.dial::before{transition:transform 1s ease}
+.dial[data-breath=in]::before{transform:scale(1.08);transition:transform 4s ease-in-out}
+.dial[data-breath=out]::before{transform:scale(.9);transition:transform 6s ease-in-out}
+.dial-breath{min-height:1.2em;margin-top:2px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--accent)}
+.dial-breath:empty{display:none}
+/* Focus mode: while a timer runs, everything but the movement steps back */
+body[data-phase=focus] .topbar .progress,body[data-phase=focus] .brand span:last-child{opacity:.3}
+body[data-phase=focus] .talk{opacity:.4}
+body[data-phase=focus] .talk:hover,body[data-phase=focus] .talk:focus-within{opacity:1}
+body[data-phase=focus] .workout-head,body[data-phase=focus] .workout-lower,body[data-phase=focus] .workout-cues{opacity:.45}
+body[data-phase=focus] .workout-hero{box-shadow:var(--shadow-soft),0 0 0 1px var(--line-sage)}
+.workout-head,.workout-lower,.workout-cues{transition:opacity .6s ease}
+/* Atmosphere moves to the page itself */
+body[data-phase=discovery]{background:radial-gradient(1100px 520px at 88% -8%,rgba(216,196,155,.4),transparent 62%),radial-gradient(900px 500px at -10% 30%,rgba(143,174,147,.22),transparent 60%),var(--paper)}
+body[data-phase=closing],body[data-phase=closed]{background:radial-gradient(1000px 600px at 50% 10%,rgba(143,174,147,.28),transparent 65%),var(--paper)}
+@media(prefers-reduced-motion:reduce){.caption,.home,.drawer,.workout-sheet{animation:none}.dial[data-breath]::before{transform:none}.quick{transition:none}}
+@media(max-width:760px){.topbar{gap:10px}.topbar .progress{display:none}.brand{font-size:19px}.talk-hint{display:none}.home-quick{grid-template-columns:1fr}.quick{min-height:72px}.workout-sheet{left:0;width:auto}#composer{padding-left:14px}}
+/* ═══ Evening theme: same tokens, low-glare greens on charcoal ═══════════ */
+:root[data-theme=dark]{--paper:#121714;--surface:#1A201C;--panel:#1F2621;--ivory:#232B25;--ivory-warm:#232A22;--stage-1:#1E2621;--stage-2:#181F1A;--ink:#E8ECE5;--soft-ink:#C6CEC3;--muted:#97A193;--line:#2B342E;--line-strong:#3A453D;--line-sage:#33433A;--accent:#9CCBB0;--accent-hover:#B2D9C2;--accent-soft:#213128;--sage:#6F927A;--sand:#B89F6E;--moss:#86AD90;--olive:#AAB784;--sage-wash:#1E2A23;--paused:#D2A35A;--paused-wash:#2C261B;--danger:#E08A78;--danger-wash:#2E1E1A;--disabled:#3A433C;--on-accent:#0F2419;--shadow-soft:0 22px 44px -28px rgba(0,0,0,.7);--shadow-lift:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.6);color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#121714;--surface:#1A201C;--panel:#1F2621;--ivory:#232B25;--ivory-warm:#232A22;--stage-1:#1E2621;--stage-2:#181F1A;--ink:#E8ECE5;--soft-ink:#C6CEC3;--muted:#97A193;--line:#2B342E;--line-strong:#3A453D;--line-sage:#33433A;--accent:#9CCBB0;--accent-hover:#B2D9C2;--accent-soft:#213128;--sage:#6F927A;--sand:#B89F6E;--moss:#86AD90;--olive:#AAB784;--sage-wash:#1E2A23;--paused:#D2A35A;--paused-wash:#2C261B;--danger:#E08A78;--danger-wash:#2E1E1A;--disabled:#3A433C;--on-accent:#0F2419;--shadow-soft:0 22px 44px -28px rgba(0,0,0,.7);--shadow-lift:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme=dark] #aura{opacity:.35}
+:root[data-theme=dark] .dial-track{stroke:rgba(156,203,176,.16)}
+/* During a workout the stage has its own "Tell Stillwater"; the page-level talk bar steps aside. */
+body.stage-talk #composer,body.stage-talk .talk-hint{display:none}
+body.stage-talk .talk{padding:0;background:none}
+body[data-phase=ready] .topbar .progress,body[data-phase=focus] .topbar .progress,body[data-phase=rest] .topbar .progress{opacity:0}
+
+/* Words collected from finished sessions (opt-in memory). */
+.home-words { display: flex; flex-wrap: wrap; gap: 8px; }
+.word-chip { padding: 4px 12px; border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 0.875rem; }
+
